@@ -5,7 +5,8 @@ from django.db import models
 
 class Applicant(AbstractUser):
     is_penn_student = models.BooleanField(default=False)
-    application = models.Model
+    application = models.OneToOneField('Application', on_delete=models.SET_NULL, null=True,
+                                       blank=True, related_name='applicant_application')
 
 
 class Application(models.Model):
@@ -27,5 +28,6 @@ class Application(models.Model):
         ("PROC", "Processing"),
     ]
 
-    applicant = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    applicant = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='applications')
     status = models.CharField(max_length=4, choices=STATUS_CHOICES, default="STRT")
+    
