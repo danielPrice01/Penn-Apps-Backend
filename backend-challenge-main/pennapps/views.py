@@ -20,8 +20,9 @@ def application_signup(request):
         return redirect('login')
 
     if request.method == 'POST':
+        applicant = request.user
 
-        if hasattr(request.user, 'application'):
+        if applicant.application:
             messages.error(request, 'You have already submitted an application.')
             return redirect('index')
 
@@ -32,7 +33,6 @@ def application_signup(request):
         q1 = request.POST["q1"]
         q2 = request.POST["q2"]
 
-        applicant = request.user
         team_member_1 = request.POST.get('team_member_1', '')
         team_member_2 = request.POST.get('team_member_2', '')
         team_member_3 = request.POST.get('team_member_3', '')
@@ -60,7 +60,8 @@ def application_signup(request):
             team_member1=team_member_1,
             team_member2=team_member_2,
             team_member3=team_member_3,
-            applicant=applicant
+            applicant=applicant,
+            status="PROC"
             )
         application.save()
 
