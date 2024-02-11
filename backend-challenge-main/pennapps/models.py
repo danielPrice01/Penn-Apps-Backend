@@ -30,4 +30,3 @@ class Application(models.Model):
 
     applicant = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='applications')
     status = models.CharField(max_length=4, choices=STATUS_CHOICES, default="STRT")
-    
