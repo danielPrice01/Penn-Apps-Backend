@@ -20,14 +20,24 @@ Home Page
     <div class="congrats-message">
       <p>Application Status: 
         {% if user.is_authenticated %}
-      {% if applicant.application %}
-        {{ applicant.application.status }}
-      {% else %}
-        Not Submitted
-      {% endif %}
+    {% if request.user.application %}
+        {% if request.user.application.status == "ACPT" %}
+            Accepted
+        {% elif request.user.application.status == "RJCT" %}
+            Rejected
+        {% elif request.user.application.status == "WLST" %}
+            Waitlisted
+        {% elif request.user.application.status == "PROC" %}
+            Processing
+        {% else %}
+            Unknown Status
+        {% endif %}
     {% else %}
-      Not Logged In
+        Not Submitted
     {% endif %}
+{% else %}
+    Not Logged In
+{% endif %}
       </p>
     </div>
     <div class="row">
